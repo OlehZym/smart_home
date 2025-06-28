@@ -16,6 +16,8 @@ dependencies:
   audioplayers: ^6.5.0
   overlay_support: ^2.1.0
   cupertino_icons: ^1.0.8
+  logger: ^2.6.0
+  http: ^1.4.0
 
 dev_dependencies:
   flutter_test:

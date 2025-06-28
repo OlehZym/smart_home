@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'models/message_model.dart';
+import '../models/message_model.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});

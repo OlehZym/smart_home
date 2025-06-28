@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'message_page.dart';
+import 'package:smart_home/screens/smart_home_page.dart';
 import 'websocket_service.dart';
 import 'package:smart_home/models/message_model.dart' as my;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -15,8 +15,8 @@ final AudioPlayer audioPlayer = AudioPlayer();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(my.MessageAdapter()); // <== вот тут с префиксом
-  await Hive.openBox<my.Message>('messages'); // <== и тут
+  Hive.registerAdapter(my.MessageAdapter());
+  await Hive.openBox<my.Message>('messages');
 
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -26,20 +26,22 @@ void main() async {
   await localNotificationsPlugin.initialize(initializationSettings);
 
   webSocketService = WebSocketService();
+  await webSocketService.connect(); // <== теперь асинхронно
 
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  final int _passwordCorrect = 0;
 
   @override
   Widget build(BuildContext context) {
     return OverlaySupport.global(
       child: MaterialApp(
-        title: 'Relay Manager',
+        title: 'Smart home',
         theme: ThemeData(useMaterial3: true),
-        home: const MessagePage(),
+        home: SmartHomePage(passwordCorrect: _passwordCorrect),
       ),
     );
   }
